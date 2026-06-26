@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://disciplinatotal.com.br/sitemap.xml

@@ -1,0 +1,29 @@
+COLE ESTAS TAGS DENTRO DO <head> DO index.html,
+SUBSTITUINDO O <title> E A <meta name="description"> ANTIGOS:
+
+<title>Disciplina em 30 Dias | Livro para Vencer a Procrastinação</title>
+<meta name="description" content="Disciplina em 30 Dias: método prático para vencer a procrastinação, criar hábitos, ter mais foco, produtividade e transformar sua rotina.">
+<link rel="canonical" href="https://disciplinatotal.com.br/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://disciplinatotal.com.br/">
+<meta property="og:title" content="Disciplina em 30 Dias | Livro para Vencer a Procrastinação">
+<meta property="og:description" content="Método prático para sair do caos, criar constância, vencer a procrastinação e transformar sua rotina em 30 dias.">
+<meta property="og:image" content="https://disciplinatotal.com.br/assets/capa-disciplina-30-dias.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Disciplina em 30 Dias | Livro para Vencer a Procrastinação">
+<meta name="twitter:description" content="Método prático para vencer a procrastinação, criar hábitos, ter mais foco e transformar sua rotina.">
+<meta name="twitter:image" content="https://disciplinatotal.com.br/assets/capa-disciplina-30-dias.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Book",
+  "name": "Disciplina em 30 Dias",
+  "author": {
+    "@type": "Person",
+    "name": "Valdivino Rodrigues Arantes Júnior"
+  },
+  "description": "Método prático para vencer a procrastinação, criar hábitos, ter mais foco e transformar sua rotina em 30 dias.",
+  "url": "https://disciplinatotal.com.br/"
+}
+</script>

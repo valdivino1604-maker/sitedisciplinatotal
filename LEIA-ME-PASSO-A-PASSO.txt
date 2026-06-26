@@ -1,0 +1,18 @@
+PASSO A PASSO PARA SUBIR NO GITHUB
+
+1. Abra o repositório sitedisciplinatotal no GitHub.
+2. Clique em Add file > Upload files.
+3. Envie estes dois arquivos na raiz do repositório:
+   - robots.txt
+   - sitemap.xml
+4. Clique em Commit changes.
+5. Depois abra o index.html no GitHub.
+6. Clique no lápis para editar.
+7. No começo do arquivo, dentro do <head>, substitua o title e a meta description antigos pelo conteúdo do arquivo index-head-seo.txt.
+8. Clique em Commit changes.
+9. Aguarde a Cloudflare atualizar.
+10. Volte ao Google Search Console e clique em Solicitar indexação.
+
+Depois teste:
+https://disciplinatotal.com.br/robots.txt
+https://disciplinatotal.com.br/sitemap.xml
