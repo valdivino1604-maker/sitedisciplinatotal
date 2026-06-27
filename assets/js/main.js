@@ -17,9 +17,10 @@ function injectPremiumStyles(){
     .fixed-buy-bar{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:90;display:flex;gap:10px;width:min(760px,calc(100vw - 28px));padding:10px;border:1px solid var(--line);border-radius:18px;background:rgba(7,7,7,.94);box-shadow:0 24px 80px rgba(0,0,0,.78);backdrop-filter:blur(12px)}
     .fixed-buy-bar a{flex:1;min-height:50px;padding:0 12px;font-size:.82rem;text-align:center}
     .float-buy{display:none!important}
-    .float-whatsapp{position:fixed;right:20px;bottom:92px;z-index:91;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:#20b15a;color:white;font-weight:950;font-size:1.4rem;box-shadow:0 18px 45px rgba(0,0,0,.55)}
+    .float-whatsapp{position:fixed!important;right:20px!important;bottom:102px!important;z-index:91!important;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:#20b15a;color:white;font-weight:950;font-size:1.4rem;box-shadow:0 18px 45px rgba(0,0,0,.55)}
+    .float-insta{position:fixed!important;right:20px!important;bottom:172px!important;z-index:91!important}
     .youtube-frame iframe{border-radius:18px;box-shadow:0 30px 90px rgba(0,0,0,.55)}
-    @media(max-width:760px){.buy-options{grid-template-columns:1fr}.fixed-buy-bar{left:10px;right:10px;bottom:12px;transform:none;width:auto}.fixed-buy-bar a{font-size:.72rem;min-height:48px}.float-whatsapp{bottom:92px}}
+    @media(max-width:760px){.buy-options{grid-template-columns:1fr}.fixed-buy-bar{left:10px;right:10px;bottom:12px;transform:none;width:auto}.fixed-buy-bar a{font-size:.72rem;min-height:48px}.float-whatsapp{right:18px!important;bottom:100px!important}.float-insta{right:18px!important;bottom:166px!important}}
   `;
   document.head.appendChild(style);
 }
