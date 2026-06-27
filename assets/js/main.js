@@ -1,10 +1,12 @@
 const CHAT_WORKER_URL='https://chatdisci.valdivino1604.workers.dev/';
 const HOTMART_URL='https://hotmart.com/pt-br/club/disciplinatotal';
 
+// Reaplicado no repositório valdivino1604-maker/sitedisciplinatotal
 // Atualiza todos os links antigos da Hotmart para o novo clube Disciplina Total
 const oldHotmartLinks=['https://go.hotmart.com/C106276938L','https://go.hotmart.com/B106269096A','https://app.hotmart.com/'];
 document.querySelectorAll('a[href]').forEach(link=>{
-  if(oldHotmartLinks.includes(link.href)||oldHotmartLinks.includes(link.getAttribute('href'))){
+  const href=link.getAttribute('href')||'';
+  if(oldHotmartLinks.includes(link.href)||oldHotmartLinks.includes(href)||href.includes('go.hotmart.com')||href.includes('app.hotmart.com')){
     link.href=HOTMART_URL;
     link.target='_blank';
     link.rel='noopener';
@@ -16,7 +18,6 @@ let floatBuy=document.querySelector('.float-buy');
 if(!floatBuy){
   floatBuy=document.createElement('a');
   floatBuy.className='float-buy btn';
-  floatBuy.textContent='Comprar agora';
   document.body.appendChild(floatBuy);
 }
 floatBuy.href=HOTMART_URL;
