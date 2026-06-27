@@ -1,30 +1,74 @@
 const CHAT_WORKER_URL='https://chatdisci.valdivino1604.workers.dev/';
-const HOTMART_URL='https://hotmart.com/pt-br/club/disciplinatotal';
+const EBOOK_URL='https://go.hotmart.com/B106269096A';
+const PHYSICAL_BOOK_URL='https://go.hotmart.com/C106276938L';
+const HOTMART_URL=EBOOK_URL;
 const WHATSAPP_URL='https://wa.me/5564981616434?text=Tenho%20interesse%20no%20livro%20Disciplina%20em%2030%20Dias';
 const YOUTUBE_EMBED_URL='https://www.youtube.com/embed/fDb03TG9csc';
 
-const oldHotmartLinks=['https://go.hotmart.com/C106276938L','https://go.hotmart.com/B106269096A','https://app.hotmart.com/'];
-document.querySelectorAll('a[href]').forEach(link=>{
-  const href=link.getAttribute('href')||'';
-  if(oldHotmartLinks.includes(link.href)||oldHotmartLinks.includes(href)||href.includes('go.hotmart.com')||href.includes('app.hotmart.com')){
-    link.href=HOTMART_URL;
-    link.target='_blank';
-    link.rel='noopener';
-  }
-});
+function injectPremiumStyles(){
+  if(document.querySelector('#premium-shop-style'))return;
+  const style=document.createElement('style');
+  style.id='premium-shop-style';
+  style.textContent=`
+    .buy-options{display:grid;grid-template-columns:repeat(2,minmax(240px,1fr));gap:16px;margin-top:22px}
+    .buy-option{border:1px solid var(--line);border-radius:22px;padding:24px;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.025));box-shadow:0 24px 80px rgba(0,0,0,.34)}
+    .buy-option strong{display:block;color:var(--gold2);font-size:1.2rem;text-transform:uppercase;margin-bottom:8px}
+    .buy-option .price{font-size:2rem;font-weight:950;color:#fff;margin:8px 0 14px}
+    .buy-option small{display:block;color:var(--muted);line-height:1.5;margin-bottom:14px}
+    .float-products{position:fixed;right:20px;bottom:88px;z-index:80;width:min(360px,calc(100vw - 32px));padding:16px;border:1px solid var(--line);border-radius:22px;background:#070707;box-shadow:0 24px 80px rgba(0,0,0,.78);display:none}
+    .float-products.open{display:block}
+    .float-products h3{margin:0 0 10px;color:var(--gold2);text-transform:uppercase}
+    .float-products p{margin:0 0 12px;color:var(--muted)}
+    .float-products a{width:100%;margin-top:8px;min-height:48px}
+    .float-whatsapp{position:fixed;right:20px;bottom:156px;z-index:60;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:#20b15a;color:white;font-weight:950;font-size:1.4rem;box-shadow:0 18px 45px rgba(0,0,0,.55)}
+    .pulse-buy{animation:pulseBuy 1.8s infinite}
+    @keyframes pulseBuy{0%{transform:scale(1)}50%{transform:scale(1.04)}100%{transform:scale(1)}}
+    .youtube-frame iframe{border-radius:18px;box-shadow:0 30px 90px rgba(0,0,0,.55)}
+    @media(max-width:760px){.buy-options{grid-template-columns:1fr}.float-products{left:16px;right:16px;bottom:86px;width:auto}.float-whatsapp{bottom:154px}}
+  `;
+  document.head.appendChild(style);
+}
+
+function updateHotmartLinks(){
+  document.querySelectorAll('a[href]').forEach(link=>{
+    const href=link.getAttribute('href')||'';
+    if(href.includes('B106269096A')){
+      link.href=EBOOK_URL;
+      link.target='_blank';
+      link.rel='noopener';
+      if(/comprar|hotmart|livro/i.test(link.textContent))link.textContent='Comprar eBook - R$ 9,99';
+    }else if(href.includes('C106276938L')||href.includes('hotmart.com/pt-br/club/disciplinatotal')){
+      link.href=PHYSICAL_BOOK_URL;
+      link.target='_blank';
+      link.rel='noopener';
+      if(/comprar|hotmart|livro/i.test(link.textContent))link.textContent='Comprar Livro Físico - R$ 39,99';
+    }
+  });
+}
 
 function ensureFloatingButtons(){
+  let panel=document.querySelector('.float-products');
+  if(!panel){
+    panel=document.createElement('div');
+    panel.className='float-products';
+    panel.innerHTML=`<h3>Escolha sua versão</h3><p>Comece agora pelo eBook ou garanta a experiência completa com o livro físico.</p><a class="btn" href="${EBOOK_URL}" target="_blank" rel="noopener">📘 eBook - R$ 9,99</a><a class="btn alt" href="${PHYSICAL_BOOK_URL}" target="_blank" rel="noopener">📚 Livro Físico - R$ 39,99</a>`;
+    document.body.appendChild(panel);
+  }
+
   let floatBuy=document.querySelector('.float-buy');
   if(!floatBuy){
-    floatBuy=document.createElement('a');
+    floatBuy=document.createElement('button');
     floatBuy.className='float-buy btn pulse-buy';
     document.body.appendChild(floatBuy);
   }
-  floatBuy.href=HOTMART_URL;
-  floatBuy.target='_blank';
-  floatBuy.rel='noopener';
-  floatBuy.setAttribute('aria-label','Comprar na Hotmart');
+  floatBuy.removeAttribute('href');
+  floatBuy.type='button';
+  floatBuy.setAttribute('aria-label','Escolher versão do livro');
   floatBuy.textContent='Comprar agora';
+  floatBuy.addEventListener('click',e=>{
+    e.preventDefault();
+    panel.classList.toggle('open');
+  });
 
   let floatWhats=document.querySelector('.float-whatsapp');
   if(!floatWhats){
@@ -43,6 +87,15 @@ function injectPremiumSections(){
   const main=document.querySelector('main');
   const comprar=document.querySelector('#comprar');
   if(!main||document.querySelector('#capitulos-premium'))return;
+
+  const shop=`
+  <section id="versoes" class="premium-block dark"><div class="container">
+    <div class="head reveal"><p class="gold">Escolha sua versão</p><h2>Comece pelo eBook ou tenha o livro físico.</h2><p>Você decide como quer iniciar sua jornada de disciplina.</p></div>
+    <div class="buy-options reveal">
+      <article class="buy-option"><strong>📘 eBook</strong><div class="price">R$ 9,99</div><small>Acesso digital rápido para começar hoje mesmo.</small><a class="btn" href="${EBOOK_URL}" target="_blank" rel="noopener">Comprar eBook</a></article>
+      <article class="buy-option"><strong>📚 Livro Físico</strong><div class="price">R$ 39,99</div><small>Experiência completa para ler, marcar e manter por perto.</small><a class="btn alt" href="${PHYSICAL_BOOK_URL}" target="_blank" rel="noopener">Comprar Livro Físico</a></article>
+    </div>
+  </div></section>`;
 
   const chapters=`
   <section id="capitulos-premium" class="premium-block dark"><div class="container">
@@ -67,8 +120,8 @@ function injectPremiumSections(){
 
   const video=`
   <section id="video" class="premium-block"><div class="container video-wrap reveal">
-    <div><p class="gold">Apresentação</p><h2>Assista antes de começar.</h2><p class="lead">Conheça a proposta do livro Disciplina em 30 Dias e entenda como o método ajuda a vencer a procrastinação, organizar a rotina e construir constância.</p><div class="actions"><a class="btn" href="${HOTMART_URL}" target="_blank" rel="noopener">Comprar na Hotmart</a><a class="btn alt" href="#ia">Perguntar para a IA</a></div></div>
-    <div class="video-box youtube-frame"><iframe width="100%" height="420" src="${YOUTUBE_EMBED_URL}" title="Disciplina em 30 Dias" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+    <div><p class="gold">Apresentação</p><h2>Assista antes de começar.</h2><p class="lead">Conheça a proposta do livro Disciplina em 30 Dias e entenda como o método ajuda a vencer a procrastinação, organizar a rotina e construir constância.</p><div class="actions"><a class="btn" href="${EBOOK_URL}" target="_blank" rel="noopener">eBook - R$ 9,99</a><a class="btn alt" href="${PHYSICAL_BOOK_URL}" target="_blank" rel="noopener">Livro Físico - R$ 39,99</a></div></div>
+    <div class="video-box youtube-frame"><iframe width="100%" height="420" src="https://www.youtube.com/embed/fDb03TG9csc" title="Disciplina em 30 Dias" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
   </div></section>`;
 
   const premium=`
@@ -98,17 +151,17 @@ function injectPremiumSections(){
 
   const club=`
   <section id="hotmart-club" class="premium-block dark"><div class="container club-box reveal">
-    <div><p class="gold">Área de membros</p><h2>Acesse pelo Hotmart Club.</h2><p class="lead">Após a compra, o acesso é liberado conforme confirmação da Hotmart. Entre pelo clube oficial do Disciplina Total.</p></div>
-    <a class="btn" href="${HOTMART_URL}" target="_blank" rel="noopener">Acessar Hotmart Club</a>
+    <div><p class="gold">Área de membros</p><h2>Acesse pela Hotmart.</h2><p class="lead">Escolha entre eBook e livro físico. O acesso/liberação acontece conforme confirmação da Hotmart.</p></div>
+    <div class="actions"><a class="btn" href="${EBOOK_URL}" target="_blank" rel="noopener">eBook - R$ 9,99</a><a class="btn alt" href="${PHYSICAL_BOOK_URL}" target="_blank" rel="noopener">Livro Físico - R$ 39,99</a></div>
   </div></section>`;
 
   const smartFaq=`
   <section id="faq-inteligente" class="premium-block"><div class="container smart-faq reveal">
-    <div><p class="gold">FAQ inteligente</p><h2>Não achou sua dúvida?</h2><p>Use o chat da página. A IA responde com base no conteúdo do livro e ajuda você a entender qual capítulo se conecta com sua dificuldade.</p></div>
-    <div class="faq-actions"><button class="btn alt" data-ask="Esse livro serve para quem procrastina muito?" type="button">Procrastinação</button><button class="btn alt" data-ask="Como o livro ajuda com foco e celular?" type="button">Foco e celular</button><button class="btn alt" data-ask="O que eu faço se não consigo manter rotina?" type="button">Rotina</button></div>
+    <div><p class="gold">FAQ inteligente</p><h2>Não achou sua dúvida?</h2><p>Use o chat da página. A IA responde com base no conteúdo do livro e ajuda você a escolher entre eBook e livro físico.</p></div>
+    <div class="faq-actions"><button class="btn alt" data-ask="Qual a diferença entre o eBook e o livro físico?" type="button">Versões</button><button class="btn alt" data-ask="Esse livro serve para quem procrastina muito?" type="button">Procrastinação</button><button class="btn alt" data-ask="Como o livro ajuda com foco e celular?" type="button">Foco e celular</button></div>
   </div></section>`;
 
-  comprar.insertAdjacentHTML('beforebegin',premium+chapters+video+carousel+club+smartFaq);
+  comprar.insertAdjacentHTML('beforebegin',premium+shop+chapters+video+carousel+club+smartFaq);
 }
 
 function initCounters(){
@@ -144,6 +197,8 @@ function initSmartFaq(){
   });
 }
 
+injectPremiumStyles();
+updateHotmartLinks();
 ensureFloatingButtons();
 injectPremiumSections();
 initCounters();
