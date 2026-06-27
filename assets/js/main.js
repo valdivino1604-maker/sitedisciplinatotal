@@ -1,4 +1,30 @@
 const CHAT_WORKER_URL='https://chatdisci.valdivino1604.workers.dev/';
+const HOTMART_URL='https://hotmart.com/pt-br/club/disciplinatotal';
+
+// Atualiza todos os links antigos da Hotmart para o novo clube Disciplina Total
+const oldHotmartLinks=['https://go.hotmart.com/C106276938L','https://go.hotmart.com/B106269096A','https://app.hotmart.com/'];
+document.querySelectorAll('a[href]').forEach(link=>{
+  if(oldHotmartLinks.includes(link.href)||oldHotmartLinks.includes(link.getAttribute('href'))){
+    link.href=HOTMART_URL;
+    link.target='_blank';
+    link.rel='noopener';
+  }
+});
+
+// Garante o botão flutuante de compra, mesmo que o HTML antigo não carregue corretamente
+let floatBuy=document.querySelector('.float-buy');
+if(!floatBuy){
+  floatBuy=document.createElement('a');
+  floatBuy.className='float-buy btn';
+  floatBuy.textContent='Comprar agora';
+  document.body.appendChild(floatBuy);
+}
+floatBuy.href=HOTMART_URL;
+floatBuy.target='_blank';
+floatBuy.rel='noopener';
+floatBuy.setAttribute('aria-label','Comprar na Hotmart');
+floatBuy.textContent='Comprar agora';
+
 const revealItems=document.querySelectorAll('.reveal');
 const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('on')}})},{threshold:.14});
 revealItems.forEach(item=>observer.observe(item));
