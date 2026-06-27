@@ -1,6 +1,7 @@
 const CHAT_WORKER_URL='https://chatdisci.valdivino1604.workers.dev/';
 const HOTMART_URL='https://hotmart.com/pt-br/club/disciplinatotal';
 const WHATSAPP_URL='https://wa.me/5564981616434?text=Tenho%20interesse%20no%20livro%20Disciplina%20em%2030%20Dias';
+const YOUTUBE_EMBED_URL='https://www.youtube.com/embed/fDb03TG9csc';
 
 const oldHotmartLinks=['https://go.hotmart.com/C106276938L','https://go.hotmart.com/B106269096A','https://app.hotmart.com/'];
 document.querySelectorAll('a[href]').forEach(link=>{
@@ -66,8 +67,8 @@ function injectPremiumSections(){
 
   const video=`
   <section id="video" class="premium-block"><div class="container video-wrap reveal">
-    <div><p class="gold">Apresentação</p><h2>Assista antes de começar.</h2><p class="lead">Use este espaço para colocar seu vídeo de apresentação do livro, falando diretamente com o leitor sobre procrastinação, rotina e transformação em 30 dias.</p><div class="actions"><a class="btn" href="${HOTMART_URL}" target="_blank" rel="noopener">Entrar na Hotmart</a></div></div>
-    <div class="video-box"><div class="play">▶</div><p>Vídeo de apresentação</p><small>Substituir por YouTube, Vimeo ou vídeo hospedado.</small></div>
+    <div><p class="gold">Apresentação</p><h2>Assista antes de começar.</h2><p class="lead">Conheça a proposta do livro Disciplina em 30 Dias e entenda como o método ajuda a vencer a procrastinação, organizar a rotina e construir constância.</p><div class="actions"><a class="btn" href="${HOTMART_URL}" target="_blank" rel="noopener">Comprar na Hotmart</a><a class="btn alt" href="#ia">Perguntar para a IA</a></div></div>
+    <div class="video-box youtube-frame"><iframe width="100%" height="420" src="${YOUTUBE_EMBED_URL}" title="Disciplina em 30 Dias" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
   </div></section>`;
 
   const premium=`
